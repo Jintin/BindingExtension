@@ -8,7 +8,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         binding.label.setText(R.string.activity_label)
     }
 }
