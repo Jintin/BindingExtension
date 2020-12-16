@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BindingExtension</string>
+    <string name="activity_label">This is Activity</string>
+    <string name="fragment_label">This is Fragment</string>
+</resources>
