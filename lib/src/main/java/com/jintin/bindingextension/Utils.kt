@@ -8,10 +8,9 @@ import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
 internal fun <V : ViewBinding> Class<*>.getBinding(layoutInflater: LayoutInflater): V {
-    val list = (this
+    val clazz = (this
         .genericSuperclass as ParameterizedType)
-        .actualTypeArguments
-    val clazz = list[0] as Class<*>
+        .actualTypeArguments[0] as Class<*>
     try {
         return clazz.getMethod(
             "inflate",
