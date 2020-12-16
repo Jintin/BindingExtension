@@ -1,5 +1,8 @@
 # BindingExtension
 
+[![CircleCI](https://circleci.com/gh/Jintin/BindingExtension.svg?style=shield)](https://circleci.com/gh/Jintin/BindingExtension)
+[![jitpack](https://jitpack.io/v/Jintin/BindingExtension.svg)](https://jitpack.io/#Jintin/BindingExtension)
+
 ViewBinding is an amazing tool for Android but it's not so fit in Android development as we still have to do some config. BindingExtension is built to provide a simpler usage.
 
 ## Install
@@ -25,7 +28,7 @@ dependencies {
 
 ### Activity
 
-Extend from `BindingActivity` with your actual `ViewBinding` type then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` :
+Extend from `BindingActivity` with your actual `ViewBinding` type then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` and you don't have to call `setContentView` anymore:
 
 ```kotlin
 class MainActivity : BindingActivity<ActivityMainBinding>() {
