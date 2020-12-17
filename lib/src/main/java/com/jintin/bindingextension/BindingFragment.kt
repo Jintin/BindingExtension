@@ -11,7 +11,8 @@ open class BindingFragment<V : ViewBinding> : Fragment() {
 
     private var _binding: V? = null
 
-    val binding: V = _binding!!
+    val binding: V = _binding
+        ?: throw RuntimeException("Should only use binding after onCreateView and before onDestroyView")
 
     override fun onCreateView(
         inflater: LayoutInflater,
