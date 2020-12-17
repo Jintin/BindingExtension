@@ -9,15 +9,23 @@ import androidx.viewbinding.ViewBinding
 
 open class BindingFragment<V : ViewBinding> : Fragment() {
 
-    lateinit var binding: V
+    private var _binding: V? = null
+
+    val binding: V = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = getBinding(inflater, container)
+        return getBinding(inflater, container)
+            .also {
+                _binding = it
+            }.root
+    }
 
-        return binding.root
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
