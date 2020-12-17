@@ -16,7 +16,7 @@ open class BindingFragment<V : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = getBinding()
+        binding = getBinding(inflater, container)
 
         return binding.root
     }
