@@ -4,15 +4,13 @@ package com.jintin.bindingextension
 
 import android.content.ComponentCallbacks
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
-internal fun <V : ViewBinding> Class<*>.getBinding(layoutInflater: LayoutInflater): V {
-    val clazz = (this
-        .genericSuperclass as ParameterizedType)
-        .actualTypeArguments[0] as Class<*>
-    try {
-        return clazz.getMethod(
+private fun <V : ViewBinding> Class<*>.getBinding(layoutInflater: LayoutInflater): V {
+    return try {
+        getMethod(
             "inflate",
             LayoutInflater::class.java
         ).invoke(null, layoutInflater) as V
@@ -21,18 +19,59 @@ internal fun <V : ViewBinding> Class<*>.getBinding(layoutInflater: LayoutInflate
     }
 }
 
-internal fun ComponentCallbacks.findClass(target: Class<*>): Class<*> {
+private fun <V : ViewBinding> Class<*>.getBinding(
+    layoutInflater: LayoutInflater,
+    container: ViewGroup?
+): V {
+    return try {
+        getMethod(
+            "inflate",
+            LayoutInflater::class.java,
+            ViewGroup::class.java,
+            Boolean::class.java
+        ).invoke(null, layoutInflater, container, false) as V
+    } catch (ex: Exception) {
+        throw RuntimeException("The ViewBinding inflate function has been changed.", ex)
+    }
+}
+
+private fun Class<*>.checkMethod(): Boolean {
+    return try {
+        getMethod(
+            "inflate",
+            LayoutInflater::class.java
+        )
+        true
+    } catch (ex: Exception) {
+        false
+    }
+}
+
+private fun ComponentCallbacks.findClass(): Class<*> {
     var javaClass: Class<*> = this.javaClass
-    while (javaClass.superclass != target) {
+    var result: Class<*>? = null
+    while (result == null || !result.checkMethod()) {
+        result = (javaClass
+            .genericSuperclass as? ParameterizedType)
+            ?.actualTypeArguments?.firstOrNull {
+                if (it is Class<*>) {
+                    it.checkMethod()
+                } else {
+                    false
+                }
+            } as? Class<*>
         javaClass = javaClass.superclass
     }
-    return javaClass
+    return result
 }
 
 internal fun <V : ViewBinding> BindingActivity<V>.getBinding(): V {
-    return findClass(BindingActivity::class.java).getBinding(layoutInflater)
+    return findClass().getBinding(layoutInflater)
 }
 
-internal fun <V : ViewBinding> BindingFragment<V>.getBinding(): V {
-    return findClass(BindingFragment::class.java).getBinding(layoutInflater)
+internal fun <V : ViewBinding> BindingFragment<V>.getBinding(
+    inflater: LayoutInflater,
+    container: ViewGroup?
+): V {
+    return findClass().getBinding(inflater, container)
 }
