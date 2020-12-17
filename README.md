@@ -20,7 +20,7 @@ allprojects {
 Then add dependency in your module `build.gradle`:
 ```groovy
 dependencies {
-  implementation 'com.github.jintin:BindingExtension:1.2.0'
+  implementation 'com.github.jintin:BindingExtension:1.3.0'
 }
 ```
 
