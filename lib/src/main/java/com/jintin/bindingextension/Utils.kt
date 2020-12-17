@@ -1,5 +1,3 @@
-@file:Suppress("UNCHECKED_CAST")
-
 package com.jintin.bindingextension
 
 import android.content.ComponentCallbacks
@@ -10,6 +8,7 @@ import java.lang.reflect.ParameterizedType
 
 private fun <V : ViewBinding> Class<*>.getBinding(layoutInflater: LayoutInflater): V {
     return try {
+        @Suppress("UNCHECKED_CAST")
         getMethod(
             "inflate",
             LayoutInflater::class.java
@@ -24,6 +23,7 @@ private fun <V : ViewBinding> Class<*>.getBinding(
     container: ViewGroup?
 ): V {
     return try {
+        @Suppress("UNCHECKED_CAST")
         getMethod(
             "inflate",
             LayoutInflater::class.java,
