@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.jintin.bindingextension.BindingActivity
 import com.jintin.bindingextension.app.databinding.ActivityMainBinding
 
-class MainActivity : BindingActivity<ActivityMainBinding>() {
+class MainActivity : BindingActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
