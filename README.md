@@ -28,7 +28,7 @@ dependencies {
 
 ### Activity
 
-Extend from `BindingActivity` with your actual `ViewBinding` type then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` and you don't have to call `setContentView` anymore:
+Extend from `BindingActivity` with your actual `ViewBinding` inflate method reference then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` and you don't have to call `setContentView` anymore:
 
 ```kotlin
 class MainActivity : BindingActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -43,7 +43,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(ActivityMainBinding::i
 
 ### Fragment
 
-Extend from `BindingFragment` with your actual `ViewBinding` type then you can use `binding` directly after `super.onCreateView(inflater, container, savedInstanceState)` is called:
+Extend from `BindingFragment` with your actual `ViewBinding` inflate method reference then you can use `binding` directly after `super.onCreateView(inflater, container, savedInstanceState)` is called:
 
 ```kotlin
 class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
@@ -54,6 +54,20 @@ class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::i
         binding.button.setOnClickListener {
             binding.button.setText(R.string.fragment_label)
         }
+    }
+}
+```
+
+### ViewHolder
+
+Extend from `BindingHolder` with parent `ViewGroup` and your actual `ViewBinding` inflate method reference then you can use `binding` directly:
+
+```kotlin
+class ViewHolder(parent: ViewGroup) :
+    BindingHolder<AdapterMainBinding>(parent, AdapterMainBinding::inflate) {
+
+    fun bind(data: String) {
+        binding.name.text = data
     }
 }
 ```
