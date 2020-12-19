@@ -20,7 +20,7 @@ allprojects {
 Then add dependency in your module `build.gradle`:
 ```groovy
 dependencies {
-  implementation 'com.github.jintin:BindingExtension:1.3.0'
+  implementation 'com.github.jintin:BindingExtension:2.0.0'
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 Extend from `BindingActivity` with your actual `ViewBinding` type then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` and you don't have to call `setContentView` anymore:
 
 ```kotlin
-class MainActivity : BindingActivity<ActivityMainBinding>() {
+class MainActivity : BindingActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 Extend from `BindingFragment` with your actual `ViewBinding` type then you can use `binding` directly after `super.onCreateView(inflater, container, savedInstanceState)` is called:
 
 ```kotlin
-class MainFragment : BindingFragment<FragmentMainBinding>() {
+class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
