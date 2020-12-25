@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jintin.bindingextension.BindingFragment
-import com.jintin.bindingextension.BindingHolder
 import com.jintin.bindingextension.app.databinding.AdapterMainBinding
 import com.jintin.bindingextension.app.databinding.FragmentMainBinding
+import com.jintin.bindingextension.toBinding
 
-class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
+class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +22,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::i
     class MainAdapter(private val list: List<String>) :
         RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(parent)
+            return ViewHolder(parent.toBinding())
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,8 +31,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::i
 
         override fun getItemCount() = list.size
 
-        class ViewHolder(parent: ViewGroup) :
-            BindingHolder<AdapterMainBinding>(parent, AdapterMainBinding::inflate) {
+        class ViewHolder(private val binding: AdapterMainBinding) :
+            RecyclerView.ViewHolder(binding.root) {
 
             fun bind(data: String) {
                 binding.name.text = data
