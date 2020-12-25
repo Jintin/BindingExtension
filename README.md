@@ -26,12 +26,21 @@ dependencies {
 
 ## Usage
 
+First of all, BindingExtension using refelction a lot to link many things internally in order to provide simple usage.
+To prevent having trouble with proguard, please remember to exclude `ViewBinding` related class in your proguard-rules file.
+
+For example, if your ViewBinding class is all under `com.jintin.bindingextension.app` package:
+
+```
+-keep public class com.jintin.bindingextension.app.databinding** { <methods>; }
+```
+
 ### Activity
 
-Extend from `BindingActivity` with your actual `ViewBinding` inflate method reference then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` and you don't have to call `setContentView` anymore:
+Extend from `BindingActivity` with your `ViewBinding` type then you can use `binding` directly after calling `super.onCreate(savedInstanceState)` and you don't have to call `setContentView` anymore:
 
 ```kotlin
-class MainActivity : BindingActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +52,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(ActivityMainBinding::i
 
 ### Fragment
 
-Extend from `BindingFragment` with your actual `ViewBinding` inflate method reference then you can use `binding` directly after `super.onCreateView(inflater, container, savedInstanceState)` is called:
+Extend from `BindingFragment` with your `ViewBinding` type then you can use `binding` directly after `super.onCreateView(inflater, container, savedInstanceState)` is called:
 
 ```kotlin
-class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
+class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,16 +69,24 @@ class MainFragment : BindingFragment<FragmentMainBinding>(FragmentMainBinding::i
 
 ### ViewHolder
 
-Extend from `BindingHolder` with parent `ViewGroup` and your actual `ViewBinding` inflate method reference then you can use `binding` directly:
+BindingExtension provide an extension function for `ViewGroup`, you can call `ViewGroup.toBinding()` in `onCreateViewHolder` to get your desire type of `ViewBinding`.
+And `ViewHolder` can than access `ViewBinding` directly without further transformation.
 
 ```kotlin
-class ViewHolder(parent: ViewGroup) :
-    BindingHolder<AdapterMainBinding>(parent, AdapterMainBinding::inflate) {
+// inside adapter
+override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    return MainViewHolder(parent.toBinding())
+}
+
+// ViewHolder
+class MainViewHolder(private val binding: AdapterMainBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(data: String) {
         binding.name.text = data
     }
 }
+
 ```
 
 You can go to ./app module for more information.

@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-open class BindingFragment<V : ViewBinding>(
-    private val bindingProvider: (LayoutInflater, ViewGroup?, Boolean) -> V
-) : Fragment() {
+open class BindingFragment<V : ViewBinding> : Fragment() {
 
     private var _binding: V? = null
 
@@ -22,8 +20,7 @@ open class BindingFragment<V : ViewBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindingProvider.invoke(inflater, container, false)
-        _binding = binding
+        _binding = getBinding(inflater, container)
         return binding.root
     }
 
