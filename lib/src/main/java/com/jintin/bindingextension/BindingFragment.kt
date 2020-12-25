@@ -20,8 +20,7 @@ open class BindingFragment<V : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = getBinding(inflater, container)
-        _binding = binding
+        _binding = getBinding(inflater, container)
         return binding.root
     }
 
