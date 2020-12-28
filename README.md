@@ -27,12 +27,12 @@ dependencies {
 ## Usage
 
 First of all, BindingExtension using refelction a lot to link many things internally in order to provide simple usage.
-To prevent having trouble with proguard, please remember to exclude `ViewBinding` related class in your proguard-rules file.
-
-For example, if your ViewBinding class is all under `com.jintin.bindingextension.app` package:
+To prevent having trouble with proguard, please remember to exclude `ViewBinding` related method in your proguard-rules file like this:
 
 ```
--keep public class com.jintin.bindingextension.app.databinding** { <methods>; }
+-keepclassmembers class * implements androidx.viewbinding.ViewBinding {
+     public static ** inflate(...);
+}
 ```
 
 ### Activity
