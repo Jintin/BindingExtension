@@ -3,8 +3,13 @@ version: 2.1
 orbs:
   android: circleci/android@2.1.2
 
+jobs:
+  example-job:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - android/run-tests
 workflows:
   example-workflow:
     jobs:
-      - android/build:
-          executor: build 
+      - example-job
