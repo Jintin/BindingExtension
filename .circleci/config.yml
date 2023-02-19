@@ -4,12 +4,14 @@ orbs:
   android: circleci/android@2.1.2
 
 jobs:
-  example-job:
+  build:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/android:2023.02
     steps:
-      - android/run-tests
+      - checkout
+      - run: ./gradlew androidDependencies
+      - run: ./gradlew lint test
 workflows:
   example-workflow:
     jobs:
-      - example-job
+      - build
