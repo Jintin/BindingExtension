@@ -44,3 +44,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
+
+ext {
+    GROUP_ID = "io.github.jintin" // your project id registered in Sonatype
+    ARTIFACT_ID = "BindingExtension" // name of your library
+    VERSION = "1.0.0"
+    SITE_URL = 'https://github.com/Jintin/BindingExtension'
+    GIT_URL = 'https://github.com/Jintin/BindingExtension.git'
+}
+
+apply from: 'publish.gradle'
