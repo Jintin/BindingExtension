@@ -22,3 +22,6 @@
 -keepclassmembers class * implements androidx.viewbinding.ViewBinding {
      public static ** inflate(...);
 }
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Fragment
